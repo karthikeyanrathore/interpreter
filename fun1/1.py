@@ -2,6 +2,9 @@
 
 INTEGER = "INTEGER"
 PLUS = "PLUS"
+MINUS = "MINUS"
+MULTIPLY = "MULTIPLY"
+DIVISION = "DIVISION"
 EOF = "EOF"
 
 class Token(object):
@@ -52,6 +55,21 @@ class Interpreter(object):
         self.advance()
         return token
 
+      if(self.current_char == '-'):
+        token = Token(MINUS , self.current_char)
+        self.advance()
+        return token
+
+      if(self.current_char == '*'):
+        token = Token(MULTIPLY , self.current_char)
+        self.advance()
+        return token
+
+      if(self.current_char == '/'):
+        token = Token(DIVISION , self.current_char)
+        self.advance()
+        return token
+
       else:
         self.error()
 
@@ -72,39 +90,43 @@ class Interpreter(object):
     self.eat(INTEGER)
 
     op = self.current_token;
-    self.eat(PLUS)
+    if(op.type == PLUS):
+      self.eat(PLUS)
+    elif(op.type == MULTIPLY):
+      self.eat(MULTIPLY)
+    elif(op.type == DIVISION):
+      self.eat(DIVISION)
+    else:
+      self.eat(MINUS)
 
     right = self.current_token;
     self.eat(INTEGER)
 
-    return left.value + right.value
+    if(op.type == PLUS):
+      return left.value + right.value
+    elif(op.type == MULTIPLY):
+      return left.value * right.value
+    elif(op.type == DIVISION):
+      try:
+        return left.value / right.value
+      except ZeroDivisionError:
+        return "ZeroDivisionError"
+    else:
+      return left.value - right.value
 
-
-
-
-
+    
+    
 def func():
   while(1):
     text = input('calc> ')
     analyze = Interpreter(text)
-    print(analyze.expr())
-
+    try:
+      print(analyze.expr())
+    except Exception:
+      print("Error parsing input")
     
 if __name__ == "__main__":
   func()
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
