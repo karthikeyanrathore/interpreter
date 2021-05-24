@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block header %}
+<h1>{% block title %}Register{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method= "post"> 
+  <label class="form-label"for="equation">Equation</label><br>
+  <input class="form-control"type="text" id="equation" name="equation"><br><br>
+  <input class="btn btn-dark mb-3" type="submit" value="Register">
+</form>
+{% endblock %}
+
+
