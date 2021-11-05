@@ -76,6 +76,36 @@ class Interpreter(object):
   def solve(self):
     self.current_token = self.get_token()
     
+    result=None
+    if self.current_token.type == INTEGER:
+      result = int(self.current_token.value)
+      self.push_check(INTEGER)
+
+    while self.current_token.type in (PLUS, MINUS, MULT, DIV):
+      if self.current_token.type == PLUS:
+        self.push_check(PLUS)
+        result += int(self.current_token.value)
+        self.push_check(INTEGER)
+      
+      elif self.current_token.type == MINUS:
+        self.push_check(MINUS)
+        result -= int(self.current_token.value)
+        self.push_check(INTEGER)
+      
+      elif self.current_token.type == MULT:
+        self.push_check(MULT)
+        result *= int(self.current_token.value)
+        self.push_check(INTEGER)
+      
+      elif self.current_token.type == DIV:
+        self.push_check(DIV)
+        result /= int(self.current_token.value)
+        self.push_check(INTEGER)
+
+    return result
+     
+    '''JUNK'''
+    '''
     left = self.current_token
     print("left", self.current_token)
     self.push_check(INTEGER)
@@ -95,7 +125,7 @@ class Interpreter(object):
     right = self.current_token
     print("right", self.current_token)
     self.push_check(INTEGER)
-    
+   
     if mid.type == PLUS:
       return int(left.value)  + int(right.value)
     if mid.type == MINUS:
@@ -104,8 +134,7 @@ class Interpreter(object):
       return int(left.value)  *  int(right.value)
     if mid.type == DIV:
       return int(left.value)  /  int(right.value)
-
-
+    '''
 
 
 if __name__ == "__main__":
