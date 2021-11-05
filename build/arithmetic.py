@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 import math
 from Token import Token
-INTEGER="INTEGER"
-PLUS="PLUS"
-MINUS="MINUS"
-MULT="MULT"
-DIV="DIV"
-EOF= "EOF"
+from objects import INTEGER, PLUS, MINUS, MULT, DIV, EOF
 
 class Interpreter(object):
   def __init__(self, inp):
