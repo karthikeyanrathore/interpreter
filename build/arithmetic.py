@@ -4,6 +4,8 @@ from Token import Token
 INTEGER="INTEGER"
 PLUS="PLUS"
 MINUS="MINUS"
+MULT="MULT"
+DIV="DIV"
 EOF= "EOF"
 
 class Interpreter(object):
@@ -55,6 +57,16 @@ class Interpreter(object):
       token = Token(MINUS, (current_char))
       self.pos += 1
       return token
+    
+    if current_char == "*":
+      token = Token(MULT, (current_char))
+      self.pos += 1
+      return token
+  
+    if current_char == "/":
+      token = Token(DIV, (current_char))
+      self.pos += 1
+      return token
   
     else:
       return Token(None, EOF)
@@ -75,11 +87,16 @@ class Interpreter(object):
     
     mid = self.current_token
     print("mid", self.current_token)
+    
     if self.current_token.type == PLUS:
       self.push_check(PLUS)
     if self.current_token.type == MINUS:
       self.push_check(MINUS)  
-
+    if self.current_token.type == MULT:
+      self.push_check(MULT)  
+    if self.current_token.type == DIV:
+      self.push_check(DIV)  
+    
     right = self.current_token
     print("right", self.current_token)
     self.push_check(INTEGER)
@@ -88,6 +105,11 @@ class Interpreter(object):
       return int(left.value)  + int(right.value)
     if mid.type == MINUS:
       return int(left.value)  -  int(right.value)
+    if mid.type == MULT:
+      return int(left.value)  *  int(right.value)
+    if mid.type == DIV:
+      return int(left.value)  /  int(right.value)
+
 
 
 
