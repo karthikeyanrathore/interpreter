@@ -34,8 +34,14 @@ class Interpreter(object):
   def get_token(self):
     if self.pos > len(self.str) - 1:
       return Token(None, EOF)
-
+    
     current_char = self.str[self.pos]
+    while current_char.isspace():
+      if self.forward():
+        current_char = self.str[self.pos]
+      else:
+        break
+
     if current_char.isdigit():
       token = Token(INTEGER,self.multidigit())
       return token
