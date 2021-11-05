@@ -1,16 +1,10 @@
 #!/usr/bin/env python3
 import math
+from Token import Token
 INTEGER="INTEGER"
 PLUS="PLUS"
 MINUS="MINUS"
 EOF= "EOF"
-
-class Token(object):
-  def __init__(self, type, value):
-    self.type = type
-    self.value = value
-  def __str__(self):
-    return "Token Value %s Type %s" %(self.value, self.type)
 
 class Interpreter(object):
   def __init__(self, inp):
@@ -88,8 +82,6 @@ class Interpreter(object):
       return int(left.value)  + int(right.value)
     if mid.type == MINUS:
       return int(left.value)  -  int(right.value)
-
-
 
 
 
