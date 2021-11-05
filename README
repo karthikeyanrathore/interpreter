@@ -9,3 +9,8 @@ lexical analysis: breaking string into tokens.
 lexemes: sequence of characters to form a token. (34, 17, 67 : INTEGER)
 parsing/parser: process of structuring diff phrases in a stream of token. (INT -> PLUS -> INT -> MINUS -> INT -> PLUS -> INT)
 
+
+
+git
+- git blame <file_name> (who wrote code in this file?)
+
