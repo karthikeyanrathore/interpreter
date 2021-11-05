@@ -1,2 +1,9 @@
 pascal interpreter && python debugger - 
 https://docs.python.org/2/library/pdb.html
+
+Arithmetic
+"3+5"
+Token: type & value (3 INT, 5 INT, + PLUS)
+lexical analysis: breaking string into tokens.
+
+
