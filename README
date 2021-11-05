@@ -6,4 +6,6 @@ Arithmetic
 Token: type & value (3 INT, 5 INT, + PLUS)
 lexical analysis: breaking string into tokens.
 
+lexemes: sequence of characters to form a token. (34, 17, 67 : INTEGER)
+parsing/parser: process of structuring diff phrases in a stream of token. (INT -> PLUS -> INT -> MINUS -> INT -> PLUS -> INT)
 
