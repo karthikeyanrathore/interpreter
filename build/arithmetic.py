@@ -101,30 +101,27 @@ class Interpreter(object):
     while self.current_token.type in (MULT, DIV):
       if self.current_token.type == MULT:
         self.push_check(MULT)
-        result *= int(self.current_token.value)
-        self.push_check(INTEGER)
+        result *= self.factor() 
       
       elif self.current_token.type == DIV:
         self.push_check(DIV)
-        result //= int(self.current_token.value)
-        self.push_check(INTEGER)
+        result //= self.factor()
   
     return result
 
   def solve(self):
     #self.current_token = self.get_token()
     result = self.term()
-    
+
     while self.current_token.type in (PLUS, MINUS):
       if self.current_token.type == PLUS:
         self.push_check(PLUS)
-        result += int(self.current_token.value)
-        self.push_check(INTEGER)
+        result += self.term() 
       
       elif self.current_token.type == MINUS:
         self.push_check(MINUS)
-        result -= int(self.current_token.value)
-        self.push_check(INTEGER)
+        result -= self.term() 
+    
     return result
    
     '''JUNK'''
