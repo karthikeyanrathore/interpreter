@@ -156,6 +156,11 @@ class Interpreter(object):
       return int(left.value)  /  int(right.value)
     '''
 
+def unit(inp):
+  x = Interpreter(inp)
+  x.current_token = x.get_token()
+  return (x.solve())
+
 
 if __name__ == "__main__":
   while 1:
