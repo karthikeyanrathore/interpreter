@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import math
 from Token import Token
-from objects import INTEGER, PLUS, MINUS, MULT, DIV, EOF
+from objects import INTEGER, PLUS, MINUS, MULT, DIV, EOF, LP, RP
 
 class Interpreter(object):
   def __init__(self, inp):
@@ -62,6 +62,16 @@ class Interpreter(object):
       token = Token(DIV, (current_char))
       self.pos += 1
       return token
+   
+    if current_char == "(":
+      token = Token(LP, (current_char))
+      self.pos += 1
+      return token
+  
+    if current_char == ")":
+      token = Token(RP, (current_char))
+      self.pos += 1
+      return token
   
     else:
       return Token(None, EOF)
@@ -72,16 +82,40 @@ class Interpreter(object):
     else:
       print("error in pushing")
       exit()
-    
-  def solve(self):
-    self.current_token = self.get_token()
-    
-    result=None
+  
+  def factor(self):
+    result = None
     if self.current_token.type == INTEGER:
       result = int(self.current_token.value)
       self.push_check(INTEGER)
+      return result
+    
+    elif self.current_token.type == LP:
+      self.push_check(LP)
+      result = self.solve()
+      self.push_check(RP)
+      return result
 
-    while self.current_token.type in (PLUS, MINUS, MULT, DIV):
+  def term(self):
+    result = self.factor()
+    while self.current_token.type in (MULT, DIV):
+      if self.current_token.type == MULT:
+        self.push_check(MULT)
+        result *= int(self.current_token.value)
+        self.push_check(INTEGER)
+      
+      elif self.current_token.type == DIV:
+        self.push_check(DIV)
+        result //= int(self.current_token.value)
+        self.push_check(INTEGER)
+  
+    return result
+
+  def solve(self):
+    #self.current_token = self.get_token()
+    result = self.term()
+    
+    while self.current_token.type in (PLUS, MINUS):
       if self.current_token.type == PLUS:
         self.push_check(PLUS)
         result += int(self.current_token.value)
@@ -91,19 +125,8 @@ class Interpreter(object):
         self.push_check(MINUS)
         result -= int(self.current_token.value)
         self.push_check(INTEGER)
-      
-      elif self.current_token.type == MULT:
-        self.push_check(MULT)
-        result *= int(self.current_token.value)
-        self.push_check(INTEGER)
-      
-      elif self.current_token.type == DIV:
-        self.push_check(DIV)
-        result /= int(self.current_token.value)
-        self.push_check(INTEGER)
-
     return result
-     
+   
     '''JUNK'''
     '''
     left = self.current_token
@@ -143,6 +166,7 @@ if __name__ == "__main__":
     if inp == "exit":
       break
     x = Interpreter(inp)
+    x.current_token = x.get_token()
     print(x.solve())
 
 
