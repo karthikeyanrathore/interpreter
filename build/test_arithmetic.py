@@ -15,8 +15,9 @@ class ArithmeticMethods(unittest.TestCase):
   def test_division(self):
     self.assertEqual(unit("5 * 7 / 6 * 7 + 1"), 5 * 7 // 6 * 7 + 1)
   def test_multi_digit(self):
-    self.assertEqual(unit("12 + 45 * 54 / 90 * 76 + 100"),12 + 45 * 54 / 90 * 76 + 100)
-
+    self.assertEqual(unit("12 + 45 * 54 / 90 * 76 + 100"),12 + 45 * 54 // 90 * 76 + 100)
+  def test_whitespace(self):
+    self.assertEqual(unit("  32   +   400   *   1004 + 244 -  100  /  9000  *  6500   *  20000  "),32 + 400  * 1004 + 244 - 100 // 9000* 6500 * 20000)
 
 
 if __name__ == "__main__":
