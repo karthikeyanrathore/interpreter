@@ -9,8 +9,23 @@ lexical analysis: breaking string into tokens.
 lexemes: sequence of characters to form a token. (34, 17, 67 : INTEGER)
 parsing/parser: process of structuring diff phrases in a stream of token. (INT -> PLUS -> INT -> MINUS -> INT -> PLUS -> INT)
 
+Syntax-directed interpreters.
+evaluate an expression as soon as the parser recognized a certain language construct like addition, subtraction, multiplication, or division. Such interpreters are called syntax-directed interpreters.
+
+abstract-syntax tree (AST)
+2 * 7  + 3
+
+      + (root node )
+  *       3
+
+2    7
+Solve -> term -> factor
+
+AST tree vs Parse tree
+- AST smaller then Parse Tree
 
 
 git
 - git blame <file_name> (who wrote code in this file?)
+
 
