@@ -23,7 +23,7 @@ Solve -> term -> factor
 
 AST tree vs Parse tree
 - AST smaller then Parse Tree
-
+- AST better for intermediate representation (IR) than Parse Tree
 
 git
 - git blame <file_name> (who wrote code in this file?)

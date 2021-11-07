@@ -108,9 +108,9 @@ class Parser(Lexer):
       elif self.current_token.type == DIV:
         self.push_check(DIV)
         result //= self.factor()
-
     return result
   
+  # Expression
   def solve(self):
     result = self.term()
     while self.current_token.type in (PLUS, MINUS):
@@ -120,8 +120,8 @@ class Parser(Lexer):
       elif self.current_token.type == MINUS:
         self.push_check(MINUS)
         result -= self.term()
-
     return result
+
 
 def unit(inp):
  x = Parser(inp)
