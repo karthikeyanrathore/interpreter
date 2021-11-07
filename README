@@ -44,7 +44,10 @@ Token Value 3 Type INTEGER
 >>> print(node.left.left.token)
 Token Value + Type PLUS
 
-
+    (+)
+  (+)  5
+ (+) 4 
+2   3
 
 git
 - git blame <file_name> (who wrote code in this file?)
