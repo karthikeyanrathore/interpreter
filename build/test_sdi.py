@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from  arithmetic import unit
+from  sdi import unit
 import unittest
 
 print(unit("1 + 1"))
