@@ -9,7 +9,7 @@ class AST(object):
 class BinNode(AST):
   def __init__(self, left, op, right):
     self.left = left
-    self.token = self.op = op
+    self.token = op
     self.right = right
   
 
@@ -88,39 +88,39 @@ class Parser(Lexer):
   # Numbers (integers)
   def factor(self):
     if self.current_token.type == INTEGER:
-      result = int(self.current_token.value)
+      token = (self.current_token)
       self.push_check(INTEGER)
-      return result
+      return Num(token)
 
     elif self.current_token.type == LP:
       self.push_check(LP)
-      result = self.solve()
+      node = self.solve()
       self.push_check(RP)
-      return result
+      return node
   
   # Operations ( * , // )
   def term(self):
-    result = self.factor()
+    node = self.factor()
     while self.current_token.type in (MULT , DIV):
+      token = self.current_token
       if self.current_token.type == MULT:
         self.push_check(MULT)
-        result *= self.factor()
       elif self.current_token.type == DIV:
         self.push_check(DIV)
-        result //= self.factor()
-    return result
+      node = BinNode(node, token , self.factor())
+    return node 
   
   # Expression
   def solve(self):
-    result = self.term()
+    node = self.term()
     while self.current_token.type in (PLUS, MINUS):
+      token = self.current_token
       if self.current_token.type == PLUS:
         self.push_check(PLUS)
-        result += self.term()
       elif self.current_token.type == MINUS:
         self.push_check(MINUS)
-        result -= self.term()
-    return result
+      node = BinNode(node , token , self.term()) 
+    return node 
 
 
 def unit(inp):
@@ -129,9 +129,8 @@ def unit(inp):
 
 
 if __name__ == "__main__":
-  x = Parser("  ((83 * 9) + 1)  ")
-  print(x.solve())
-
-
+  x = Parser("2+3")
+  node = x.solve()
+  
 
 

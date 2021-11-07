@@ -25,6 +25,27 @@ AST tree vs Parse tree
 - AST smaller then Parse Tree
 - AST better for intermediate representation (IR) than Parse Tree
 
+
+AST
+>>> x = Parser("2+3+4+5")
+>>> node = x.solve()
+>>>
+>>> print(node.left.token)
+Token Value + Type PLUS
+>>> print(node.left.left.token)
+Token Value + Type PLUS
+>>> print(node.left.left.left.token)
+Token Value 2 Type INTEGER
+>>> print(node.left.left.right.token)
+Token Value 3 Type INTEGER
+>>>
+>>>
+>>>
+>>> print(node.left.left.token)
+Token Value + Type PLUS
+
+
+
 git
 - git blame <file_name> (who wrote code in this file?)
 
