@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from Token import Token
-from objects import PLUS, MINUS, MULT, DIV, LP, RP, INTEGER
+from objects import PLUS, MINUS, MULT, DIV, LP, RP, INTEGER, EOF
 
 class AST(object):
   pass
@@ -22,7 +22,8 @@ class Lexer(object):
   def __init__(self, inp):
     self.str = inp
     self.pos = 0
-  
+    self.current_token = self.get_token()
+    
   def forward(self):
     if len(self.str) - 1 <= self.pos:
       return 0
@@ -47,7 +48,6 @@ class Lexer(object):
       return Token(EOF, None)
 
     current_char = self.str[self.pos]
-    
     while current_char.isspace():
       if self.forward():
         current_char = self.str[self.pos]
@@ -58,33 +58,45 @@ class Lexer(object):
       return Token(INTEGER, self.multidigit())
 
     if current_char == "+":
+      self.pos += 1
       return Token(PLUS, "+")
     if current_char == "-":
+      self.pos += 1
       return Token(MINUS, "-")
     if current_char == "*":
+      self.pos += 1
       return Token(MULT, "*")
     if current_char == "/":
+      self.pos += 1
       return Token(DIV, "/")
     if current_char == "(":
+      self.pos += 1
       return Token(LP, "(")
     if current_char == ")":
+      self.pos += 1
       return Token(RP, ")")
 
-
-
-
-
+ 
+class Parser(Lexer):
+  def push_check(self , token_type):
+    if self.current_token.type == token_type:
+      self.current_token = self.get_token()
+    else:
+      return "err"
   
-class Parser(object):
-  def __init_(self):
+  def factor(self):
+    pass
+  def term(self):
+    pass
+
+  def solve(self):
+    #print( self.current_token )
     pass
 
 
 if __name__ == "__main__":
-  x = Lexer("  83  ")
-  token = x.get_token()
-  print(token)
-  print(x.str[x.pos])
+  x = Parser("  83   + 91 + 100 ")
+  x.solve()
 
 
 
