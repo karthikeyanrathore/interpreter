@@ -33,9 +33,9 @@ class Lexer(object):
 
   def multidigit(self):
     current_char = self.str[self.pos]
-    sum = 0
+    sum = ""
     while current_char.isdigit():
-      sum += int(current_char)
+      sum += str(current_char)
       if self.forward():
         current_char = self.str[self.pos]
       else:
@@ -75,28 +75,62 @@ class Lexer(object):
     if current_char == ")":
       self.pos += 1
       return Token(RP, ")")
-
+    else:
+      return Token(EOF, None)
  
 class Parser(Lexer):
   def push_check(self , token_type):
     if self.current_token.type == token_type:
       self.current_token = self.get_token()
     else:
-      return "err"
+      return "error"
   
+  # Numbers (integers)
   def factor(self):
-    pass
-  def term(self):
-    pass
+    if self.current_token.type == INTEGER:
+      result = int(self.current_token.value)
+      self.push_check(INTEGER)
+      return result
 
+    elif self.current_token.type == LP:
+      self.push_check(LP)
+      result = self.solve()
+      self.push_check(RP)
+      return result
+  
+  # Operations ( * , // )
+  def term(self):
+    result = self.factor()
+    while self.current_token.type in (MULT , DIV):
+      if self.current_token.type == MULT:
+        self.push_check(MULT)
+        result *= self.factor()
+      elif self.current_token.type == DIV:
+        self.push_check(DIV)
+        result //= self.factor()
+
+    return result
+  
   def solve(self):
-    #print( self.current_token )
-    pass
+    result = self.term()
+    while self.current_token.type in (PLUS, MINUS):
+      if self.current_token.type == PLUS:
+        self.push_check(PLUS)
+        result += self.term()
+      elif self.current_token.type == MINUS:
+        self.push_check(MINUS)
+        result -= self.term()
+
+    return result
+
+def unit(inp):
+ x = Parser(inp)
+ return (x.solve())
 
 
 if __name__ == "__main__":
-  x = Parser("  83   + 91 + 100 ")
-  x.solve()
+  x = Parser("  ((83 * 9) + 1)  ")
+  print(x.solve())
 
 
 
