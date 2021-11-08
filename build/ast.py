@@ -127,6 +127,26 @@ class Interpreter(object):
   def __init__(self, tree):
     self.tree = tree
   
+  def visit_Num(self, node):
+    return int(node.token.value)
+  
+  def visit_BinNode(self, node):
+    if node.token.type == PLUS:
+      return self.visit(node.left) + self.visit(node.right)
+    elif node.token.type == MINUS:
+      return self.visit(node.left) - self.visit(node.right)
+    elif node.token.type == MULT:
+      return self.visit(node.left) * self.visit(node.right)
+    elif node.token.type == DIV:
+      return self.visit(node.left) // self.visit(node.right)
+
+  def visit(self, node):
+    var = type(node).__name__
+    if var == "BinNode":
+      return self.visit_BinNode(node)
+    else:
+      return self.visit_Num(node)
+
   '''
   def postorder(self, node, a):
     if node.token.type == INTEGER:
@@ -140,13 +160,14 @@ class Interpreter(object):
 
 def unit(inp):
  x = Parser(inp)
- return (x.solve())
-
+ node = (x.solve())
+ answer = Interpreter(node).visit(node)
+ return answer
 
 if __name__ == "__main__":
-  x = Parser("2+3+4+5")
+  x = Parser("2+(3*4)+5")
   node = x.solve()
-  answer = Interpreter(node)
-   
+  answer = Interpreter(node).visit(node)
+  print(answer) 
 
 
