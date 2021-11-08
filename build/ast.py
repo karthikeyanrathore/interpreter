@@ -165,7 +165,7 @@ def unit(inp):
  return answer
 
 if __name__ == "__main__":
-  x = Parser("2+(3*4)+5")
+  x = Parser("+2")
   node = x.solve()
   answer = Interpreter(node).visit(node)
   print(answer) 
