@@ -8,7 +8,7 @@ class AST(object):
 
 class BinNode(AST):
   def __init__(self, left, op, right):
-    self.left = left
+    self.left = left 
     self.token = op
     self.right = right
   
@@ -123,14 +123,30 @@ class Parser(Lexer):
     return node 
 
 
+class Interpreter(object):
+  def __init__(self, tree):
+    self.tree = tree
+  
+  '''
+  def postorder(self, node, a):
+    if node.token.type == INTEGER:
+      a.append(node.token)
+      return
+    self.postorder(node.left, a)
+    a.append(node.token)
+    self.postorder(node.right,a)
+  '''
+
+
 def unit(inp):
  x = Parser(inp)
  return (x.solve())
 
 
 if __name__ == "__main__":
-  x = Parser("2+3")
+  x = Parser("2+3+4+5")
   node = x.solve()
-  
+  answer = Interpreter(node)
+   
 
 
