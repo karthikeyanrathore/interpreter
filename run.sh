@@ -1,5 +1,7 @@
 #!/bin/bash
-chmod +x build/main.py
 cd build
-./main.py 
+printf "testing AST \n"
+./test_ast.py 
+printf "testing Syntax-directed interpreters \n"
+./test_sdi.py
 cd ../

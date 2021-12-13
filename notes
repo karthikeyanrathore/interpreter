@@ -1,0 +1,26 @@
+*** compiler ***
+- Lexical Analysis (Syntax of lang)
+- Parsing (Syntax of lang)
+- Semantic Analysis (types, scope)
+- Optimiztion (memory, time)
+- Code Genearation (convert program to asssembly lang or bytes or ...)
+
+
+Lexical Analysis
+- divides program into tokens.
+
+Parsing
+- tree
+- structuring
+
+Semantic Analysis 
+- Hard
+- lang create strict rules to remove ambiguity.
+- x = y * 0 then x = 0 (this is true only for int)
+- if x & y are floating points then x = NaN by ieee.
+
+Optimiztion
+- space 
+- speed
+
+Code Genearation
