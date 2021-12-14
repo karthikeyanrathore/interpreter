@@ -1,3 +1,5 @@
+https://online.stanford.edu/courses/soe-ycscs1-compilers
+
 *** compiler ***
 - Lexical Analysis (Syntax of lang)
 - Parsing (Syntax of lang)
@@ -8,6 +10,10 @@
 
 Lexical Analysis
 - divides program into tokens.
+- token : <token class, "lexeme">
+- lexeme: substring 
+- 15 <int, "15">, x <identifier, "x"> , + <operator, "+">
+
 
 Parsing
 - tree
@@ -24,3 +30,10 @@ Optimiztion
 - speed
 
 Code Genearation
+
+
+
+
+*** Regular Expression ***
+-  lexical analysis.
+
