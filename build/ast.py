@@ -11,7 +11,11 @@ class BinNode(AST):
     self.left = left 
     self.token = op
     self.right = right
-  
+
+class Unary(AST):
+  def __init__(self, op, expr):
+    self.token = op
+    self.expr = expr
 
 class Num(AST):
   def __init__(self, token):
@@ -87,7 +91,17 @@ class Parser(Lexer):
   
   # Numbers (integers)
   def factor(self):
-    if self.current_token.type == INTEGER:
+    if self.current_token.type == PLUS:
+      token = (self.current_token)
+      self.push_check(PLUS)
+      return Unary(token, self.factor())
+   
+    elif self.current_token.type == MINUS:
+      token = (self.current_token)
+      self.push_check(MINUS)
+      return Unary(token, self.factor())
+   
+    elif self.current_token.type == INTEGER:
       token = (self.current_token)
       self.push_check(INTEGER)
       return Num(token)
@@ -139,11 +153,21 @@ class Interpreter(object):
       return self.visit(node.left) * self.visit(node.right)
     elif node.token.type == DIV:
       return self.visit(node.left) // self.visit(node.right)
+  
+  def visit_Unary(self,node):
+    print(node.expr.token)
+    if node.token.type == PLUS:
+      return +self.visit(node.expr)
+    elif  node.token.type == MINUS:
+      return -self.visit(node.expr)
 
   def visit(self, node):
     var = type(node).__name__
+    print(var)
     if var == "BinNode":
       return self.visit_BinNode(node)
+    elif var == "Unary":
+      return self.visit_Unary(node)
     else:
       return self.visit_Num(node)
 
@@ -165,9 +189,11 @@ def unit(inp):
  return answer
 
 if __name__ == "__main__":
-  x = Parser("+2")
+  x = Parser("  + -  2 -+ 9")
   node = x.solve()
-  answer = Interpreter(node).visit(node)
-  print(answer) 
+  s = Interpreter(node).visit(node) 
+  print(s)
+  #answer = Interpreter(node).visit(node)
+  #print(answer) 
 
 
