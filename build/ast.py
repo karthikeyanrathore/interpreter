@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import sys
 from Token import Token
 from objects import PLUS, MINUS, MULT, DIV, LP, RP, INTEGER, EOF
 
@@ -155,7 +156,6 @@ class Interpreter(object):
       return self.visit(node.left) // self.visit(node.right)
   
   def visit_Unary(self,node):
-    print(node.expr.token)
     if node.token.type == PLUS:
       return +self.visit(node.expr)
     elif  node.token.type == MINUS:
@@ -163,7 +163,6 @@ class Interpreter(object):
 
   def visit(self, node):
     var = type(node).__name__
-    print(var)
     if var == "BinNode":
       return self.visit_BinNode(node)
     elif var == "Unary":
@@ -189,11 +188,7 @@ def unit(inp):
  return answer
 
 if __name__ == "__main__":
-  x = Parser("  + -  2 -+ 9")
+  x = Parser(sys.argv[1])
   node = x.solve()
-  s = Interpreter(node).visit(node) 
-  print(s)
-  #answer = Interpreter(node).visit(node)
-  #print(answer) 
-
-
+  answer = Interpreter(node).visit(node)
+  print(answer) 

@@ -18,12 +18,15 @@ class ArithmeticMethods(unittest.TestCase):
     self.assertEqual(unit("12 + 45 * 54 / 90 * 76 + 100"),12 + 45 * 54 // 90 * 76 + 100)
   def test_whitespace(self):
     self.assertEqual(unit("  32   +   400   *   1004 + 244 -  100  /  9000  *  6500   *  20000  "),32 + 400  * 1004 + 244 - 100 // 9000* 6500 * 20000)
-
   def test_parenthesis(self):
     self.assertEqual(unit("7 + (((3 + 2)))"), 7 + (((3 + 2))))
     self.assertEqual(unit("7 + 3 * (10 / (12 / (3 + 1) - 1))"), 7 + 3 * (10 // (12 // (3 + 1) - 1)))
     self.assertEqual(unit("7 + 3 * (10 / (12 / (3 + 1) - 1)) / (2 + 3) - 5 - 3 + (8)"), 7 + 3 * (10 // (12 // (3 + 1) - 1)) // (2 + 3) - 5 - 3 + (8))
-
+  
+  def test_Unary(self):
+    self.assertEqual(unit("- + - - + + - - - 2"), - + - - + + - - - 2 )
+    self.assertEqual(unit("- + - - 2 - + 9 - + 7"), - + - - 2 - + 9 - + 7 )
+    self.assertEqual(unit("1 - + 3 * (- 2) - + + (- 129 - + 17)"), 1 - + 3 * (- 2) - + + (- 129 - + 17)) 
 
 if __name__ == "__main__":
   unittest.main()
