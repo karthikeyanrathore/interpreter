@@ -180,7 +180,6 @@ class Interpreter(object):
     self.postorder(node.right,a)
   '''
 
-
 def unit(inp):
  x = Parser(inp)
  node = (x.solve())

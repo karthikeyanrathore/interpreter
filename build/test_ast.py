@@ -2,8 +2,6 @@
 from  ast import unit
 import unittest
 
-print(unit("1 + 1"))
-
 class ArithmeticMethods(unittest.TestCase):
 
   def test_add(self):
@@ -22,7 +20,6 @@ class ArithmeticMethods(unittest.TestCase):
     self.assertEqual(unit("7 + (((3 + 2)))"), 7 + (((3 + 2))))
     self.assertEqual(unit("7 + 3 * (10 / (12 / (3 + 1) - 1))"), 7 + 3 * (10 // (12 // (3 + 1) - 1)))
     self.assertEqual(unit("7 + 3 * (10 / (12 / (3 + 1) - 1)) / (2 + 3) - 5 - 3 + (8)"), 7 + 3 * (10 // (12 // (3 + 1) - 1)) // (2 + 3) - 5 - 3 + (8))
-  
   def test_Unary(self):
     self.assertEqual(unit("- + - - + + - - - 2"), - + - - + + - - - 2 )
     self.assertEqual(unit("- + - - 2 - + 9 - + 7"), - + - - 2 - + 9 - + 7 )
